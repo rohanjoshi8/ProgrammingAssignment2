@@ -1,36 +1,50 @@
-## Put comments here that give an overall description of what your
-## functions do
+## makeCacheMatrix is a list of functions to set a matrix, extract a matrix, set the inverse of a matrix and to get the inverse of a matrix.
+## cacheSolve is a fucntion that calculates the inverse of a matrix if it does not exist, else it extract the inverse from the cache.
 
-## Write a short comment describing this function
 
-makeCacheMatrix <- function(x = matrix()) {
-        m <- NULL
+## makeCacheMatrix is a list of functions to set a matrix, extract a matrix, set the inverse of a matrix and to get the inverse of a matrix.
+##  Usage -> Make a variable that holds makeCacheMatrix.
+## Access the functions within makeCacheMatrix by using the variable: E.g. a$set
+
+makeCacheMatrix <- function(x = numeric()) {
+
+        
+        inv <- NULL
+        
         set <- function(y) {
                 x <<- y
-                m <<- NULL
+                inv <<- NULL
         }
+        
         get <- function() x
-        setinverse <- function(inverse) m <<- inverse
-        getinverse <- function() m
-        list(set = set, get = get,
-             setinverse = setinverse,
-             getinverse = getinverse)
+        
+        setinverse <- function(inverse) inv <<- inverse
+        
+        getinverse <- function() inv
+        
+        list(set = set, get = get,setinverse = setinverse,getinverse = getinverse)
+        
+        
 }
 
-
-## Write a short comment describing this function
+##  cacheSolve finds the inverse of the matrix. 
+##  If inverse is present in cache it is extracted, else a new inverse is calculated,
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
-        m <- x$getinverse()
+
         
-        if(!is.null(m)) {
+        inv <- x$getinverse()
+        
+        if(!is.null(inv)) {
                 message("getting cached data")
-                return(m)
+                return(inv)
         }
         
         data <- x$get()
-        m <- solve(data)
-        x$setinverse(m)
-        m
+        
+        inv <- solve(data, ...)
+        
+        x$setinverse(inv)
+        
+        inv
 }
